@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Private Room</title>
+
+  <!-- ================= OG PREVIEW ================= -->
+
+  <!-- GANTI GAMBAR PREVIEW DI SINI -->
+  <!-- contoh: https://domainlu.com/image.jpg -->
+  <meta property="og:image" content="https://raw.githubusercontent.com/kokondaua-lgtm/Galery-interface/refs/heads/main/preview.jpg">
+
+  <!-- GANTI JUDUL -->
+  <meta property="og:title" content="🔒 Lovely Room Access">
+
+  <!-- GANTI DESKRIPSI -->
+  <meta property="og:description" content="Limited access • Tap to enter">
+
+  <!-- JANGAN DIUBAH -->
+  <meta property="og:url" content="/">
+  <meta property="og:type" content="website">
+
+  <!-- ============================================ -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .status {
+      font-size: 14px;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .bar {
+      width: 0%;
+      height: 100%;
+      background: #ff004f;
+      transition: 0.3s;
+    }
+
+    .people {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .loader {
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid #ff004f;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      margin: auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .btn {
+      margin-top: 25px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 30px;
+      background: #ff004f;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      display: none;
+    }
+
+    .hint {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <div class="title">🔒 Love Interface Room</div>
+  <div class="status" id="status">Connecting...</div>
+
+  <div class="progress">
+    <div class="bar" id="bar"></div>
+  </div>
+
+  <div class="people" id="people"></div>
+
+  <div class="loader" id="loader"></div>
+
+  <!-- CTA SUDAH DIGANTI -->
+  <button class="btn" id="btn" onclick="goLink()">Enter Now 🔥</button>
+
+  <div class="hint">Limited slots available</div>
+
+</div>
+
+<script>
+
+  /* ================= GANTI LINK DI SINI ================= */
+  const link = "https://dffjhfg.lnkks.com/p/oRqSU";
+  /* ===================================================== */
+
+  function goLink() {
+    window.location.href = link;
+  }
+
+  const lang = navigator.language || "en";
+
+  let text = {
+    connecting: "Connecting...",
+    verifying: "Verifying access...",
+    ready: "Private room ready",
+    people: "people entering"
+  };
+
+  if (lang.includes("id")) {
+    text = {
+      connecting: "Menghubungkan...",
+      verifying: "Memverifikasi akses...",
+      ready: "Room siap diakses",
+      people: "orang sedang masuk"
+    };
+  }
+
+  const status = document.getElementById("status");
+  const bar = document.getElementById("bar");
+  const people = document.getElementById("people");
+
+  /* ================= EDIT RAMAI / SEPI ================= */
+  let count = Math.floor(Math.random()*300)+250;
+  /* ==================================================== */
+
+  function updatePeople(){
+    count += Math.floor(Math.random()*5)+2;
+    people.innerText = count + " " + text.people;
+  }
+
+  setInterval(updatePeople, 600);
+  updatePeople();
+
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += Math.random()*15;
+    if(progress > 100) progress = 100;
+
+    bar.style.width = progress + "%";
+
+    if(progress < 40){
+      status.innerText = text.connecting;
+    } else if(progress < 80){
+      status.innerText = text.verifying;
+    } else {
+      status.innerText = text.ready;
+    }
+
+    if(progress === 100){
+      clearInterval(interval);
+
+      document.getElementById("loader").style.display = "none";
+      document.getElementById("btn").style.display = "block";
+
+      /* ===== AUTO REDIRECT (OPTIONAL) ===== */
+      setTimeout(()=>{
+        goLink();
+      }, 600); // GANTI DELAY DI SINI / HAPUS KALO MAU MANUAL
+    }
+
+  }, 200);
+
+</script>
+
+</body>
+</html>
